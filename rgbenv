@@ -366,7 +366,9 @@ _install () {
 	tempfile=$(mktemp)
 	trap "rm -f \"${tempfile:?}\"" ERR
 	curl -L "${download_link}" > "${tempfile}"
+	set +o pipefail
 	dirname=$(tar tzf "$tempfile" | head -1 | cut -f1 -d'/')
+	set -o pipefail
 	cd "${RGBENV_VERSIONS}"
 	tar xzf "${tempfile}"
 	
